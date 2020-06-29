@@ -14,6 +14,7 @@
 
 import React from 'react';
 import Column from './Column';
+import '../styles/Main.scss';
 
 function Main({ groups }) {
   return (
