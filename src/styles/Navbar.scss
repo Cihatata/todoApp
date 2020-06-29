@@ -1,0 +1,43 @@
+@import './Base.scss';
+
+.header{
+    font-family:'Oxygen' ,Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    height: 72px;
+    background-color:$header;
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    &-logo{
+        font-size: 24px;
+        font-weight: 700;
+        width: 15%;
+        color: #292a73;
+        margin-left: 5%;
+        @include mq() {
+            font-size: 36px;
+        }
+    }
+    &-menu{
+        margin-left:auto;
+        display: flex;
+        margin-right: 4%;
+        &-button{
+            padding: 3px;
+            font-size: 12px;
+            font-weight: 700;
+            height:40px;
+            width: 90px;
+            background-color:$acikmavi;
+            color:$logo;
+            margin-right: 8px;
+            border-radius: 5px;
+            border:2px solid $koyu;
+            @include mq(){
+                font-size: 16px;
+                margin-right: 10px;
+                width: 110px;
+            }
+        }
+    }
+
+}
