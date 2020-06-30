@@ -1,5 +1,6 @@
 import React from 'react';
 import Card from './Card';
+import '../styles/Column.scss';
 
 function Column({ groups }) {
   console.log(groups);

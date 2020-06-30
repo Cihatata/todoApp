@@ -19,6 +19,13 @@ class App extends Component {
               date: '29-06-2020',
               tags: 1,
             },
+            {
+              header: 'Proje Teslimi',
+              text: 'Oyun Programlama odevi teslim edilecek',
+              imgSrc: '',
+              date: '30-06-2020',
+              tags: 1,
+            },
           ],
         },
         {
@@ -33,6 +40,24 @@ class App extends Component {
               tag: 2,
             },
           ],
+        },
+        {
+          groupId: 3,
+          groupName: 'Haftasonu',
+          cards: [
+            {
+              header: 'Piknik',
+              text:
+                'aOkul arkadaslari ile beraber piknige gidilecek. Haftasonuna kadar isleri hallet',
+              imgSrc: '',
+              date: '01-07-2020',
+              tag: 3,
+            },
+          ],
+        },
+        {
+          groupId: 4,
+          groupName: 'E-spor',
         },
       ],
     };

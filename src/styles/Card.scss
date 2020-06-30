@@ -1,0 +1,35 @@
+@import './Base.scss';
+
+.card{
+    color:$logo;
+    margin-bottom: 18px;
+    border-radius: 5px;
+    box-shadow: 10px 10px 20px 0px rgba(0, 0, 0, 0.384);
+    background-color: $header;
+    padding: 10px;
+    display: flex;
+    box-sizing: border-box;
+    &-left{
+        font-size: 14px;
+        font-weight: 400;
+        margin-right: 25px;
+        box-sizing: border-box;
+        &-header{
+            padding: 4px;
+            font-size: 18px;
+            font-weight: bold;
+            border-bottom: 1px solid $koyu;
+        }
+        &-text{
+            line-height: 1.5;
+            padding: 6px;
+        }
+    }
+    
+    &-right{
+        margin-left: auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+    }
+}

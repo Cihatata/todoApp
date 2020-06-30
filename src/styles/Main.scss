@@ -1,8 +1,9 @@
 .main{
     display: flex;
-    max-width: 1400px;
+    flex-wrap: wrap;
+    max-width: 1600px;
     padding: 15px;
-    background-color: #ddd;
+    //background-color: #ddd;
     margin: auto;
     margin-top: 10px;
 }

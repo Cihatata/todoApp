@@ -1,0 +1,26 @@
+@import './Base.scss';
+
+.column{
+    width: 60%;
+    box-sizing: border-box;
+    padding: 20px;
+    min-width: 365px;
+    //#ToDo MARGIN kaldir sonradan
+    margin-left: 3px;
+    @include mq(){
+        width: 30%;
+        border-right: 5px dashed $acikmavi;
+        min-width: 310px;
+        margin-bottom: 40px;
+
+    }
+    &-header{
+        font-weight: 700;
+        font-size: 36px;
+        margin-bottom: 18px;
+        color: $acikmavi;
+        padding: 3px;
+        border-bottom: 2px solid $logo;
+    }
+
+}
