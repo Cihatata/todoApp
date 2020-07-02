@@ -20,6 +20,7 @@ function Main(props) {
   console.log(props);
   const {
     ifClickEvent,
+    ifClickGroup,
     groups,
     eventHeader,
     handleChange,
@@ -27,11 +28,31 @@ function Main(props) {
     eventDate,
     eventTags,
     handleSubmit,
+    groupNameInput,
+    addGroup,
   } = props;
   return (
     <main className="main">
       <Column groups={groups} />
       <div>
+        <div className={'main-form' + (ifClickGroup ? '-show' : ' ')}>
+          <label htmlFor="GroupName" className="main-form-show-label">
+            Grup ismi
+            <input
+              name="groupNameInput"
+              value={groupNameInput}
+              type="text"
+              onChange={handleChange}
+              className="main-form-show-input"
+            />
+          </label>
+          <input
+            onClick={addGroup}
+            type="Submit"
+            value="Ekle"
+            className="main-form-show-submit"
+          />
+        </div>
         <form className={'main-form' + (ifClickEvent ? '-show' : ' ')}>
           <label htmlFor="baslik" className="main-form-show-label">
             Etkinlik Basligi
@@ -72,11 +93,14 @@ function Main(props) {
           </label>
           <label htmlFor="group" className="main-form-show-label">
             Grup
-            <select className="main-form-show-select">
-              <option value="select">Select a technology</option>
-              <option value="Angular">Angular</option>
-              <option value="Bootstrap">Bootstrap</option>
-              <option value="React">React</option>
+            <select
+              onChange={handleChange}
+              name="eventGroupName"
+              className="main-form-show-select"
+            >
+              {groups.map((val) => {
+                return <option value={val.groupName}>{val.groupName}</option>;
+              })}
             </select>
           </label>
           <input onClick={handleSubmit} className="main-form-show-submit" type="submit" value="Ekle" />

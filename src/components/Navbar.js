@@ -10,13 +10,21 @@ class Navbar extends PureComponent {
         <div className="header-logo">KodTodo</div>
         <nav className="header-menu">
           <button
-            onClick={() => showForm()}
+            value="ifClickEvent"
+            onClick={showForm}
             type="button"
             className="header-menu-button"
+            name="ifClickEvent"
           >
             Etkinlik Ekle
           </button>
-          <button type="button" className="header-menu-button">
+          <button
+            onClick={showForm}
+            value="ifClickGroup"
+            name="ifClickGroup"
+            type="button"
+            className="header-menu-button"
+          >
             Grup Ekle
           </button>
         </nav>

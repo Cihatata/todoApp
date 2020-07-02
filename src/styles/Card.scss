@@ -9,11 +9,13 @@
     padding: 10px;
     display: flex;
     box-sizing: border-box;
-    &-left{
+        &-left{
         font-size: 14px;
         font-weight: 400;
         margin-right: 25px;
         box-sizing: border-box;
+        width: 60%;
+        max-width: 290px;
         &-header{
             padding: 4px;
             font-size: 18px;

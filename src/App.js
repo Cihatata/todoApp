@@ -8,10 +8,14 @@ class App extends Component {
     super();
     this.state = {
       ifClickEvent: 0,
+      ifClickGroup: 0,
+      groupNameInput: '',
       eventHeader: '',
       eventContent: '',
       eventTags: '2',
       eventDate: '',
+      eventGroupName: 'Okul',
+      // todo Buradaki Default deger dinamiklesecek
       groups: [
         {
           groupId: 1,
@@ -63,18 +67,32 @@ class App extends Component {
         {
           groupId: 4,
           groupName: 'E-spor',
+          cards: [],
         },
       ],
     };
     this.showForm = this.showForm.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.addGroup = this.addGroup.bind(this);
   }
 
   handleSubmit(e) {
     const { groups } = this.state;
-    let { eventHeader, eventContent, eventDate, eventTags } = this.state;
-    const oldCard = groups[1].cards;
+    const {
+      eventHeader,
+      eventContent,
+      eventDate,
+      eventTags,
+      eventGroupName,
+    } = this.state;
+    let index;
+    groups.map((val, i) => {
+      if (val.groupName === eventGroupName) {
+        index = i;
+      }
+    });
+    const oldCard = groups[index].cards;
     const newCard = {
       header: eventHeader,
       text: eventContent,
@@ -82,27 +100,51 @@ class App extends Component {
       date: eventDate,
       tag: eventTags,
     };
-    console.log(newCard);
-    console.log(oldCard);
     oldCard.push(newCard);
     console.log(oldCard);
-    this.setState({ groups });
-    eventHeader = ' ';
-    eventContent = ' ';
-    eventTags = 0;
+    this.setState({
+      groups,
+      eventHeader: '',
+      eventContent: '',
+      eventDate: '',
+      eventTags: 2,
+      eventGroupName: 'Okul',
+      ifClickEvent: 0,
+    });
+    e.preventDefault();
+  }
+
+  addGroup(e) {
+    // const { name, value } = e.target;
+    const { groups, groupNameInput } = this.state;
+    let lastGroup = groups[groups.length - 1];
+    const newGroupId = lastGroup.groupId + 1;
+    const newGroups = {
+      groupId: newGroupId,
+      groupName: groupNameInput,
+      cards: [],
+    };
+    groups.push(newGroups);
+    this.setState({ groups, groupNameInput: '', ifClickGroup: 0 });
     e.preventDefault();
   }
 
   handleChange(e) {
-    console.log('teste girdi');
-    console.log(e.target.name);
     this.setState({ [e.target.name]: e.target.value });
   }
 
-  showForm() {
-    console.log('girdi');
-    const { ifClickEvent } = this.state;
-    this.setState({ ifClickEvent: !ifClickEvent });
+  showForm(e) {
+    const { name } = e.target;
+    const { ifClickEvent, ifClickGroup } = this.state;
+    let val;
+    if (name === 'ifClickEvent') {
+      console.log('value ifClickE');
+      val = ifClickEvent;
+    } else if (name === 'ifClickGroup') {
+      console.log('else if');
+      val = ifClickGroup;
+    }
+    this.setState({ [name]: !val });
   }
 
   render() {
@@ -113,17 +155,22 @@ class App extends Component {
       eventDate,
       eventHeader,
       eventTags,
+      ifClickGroup,
+      groupNameInput,
     } = this.state;
     return (
       <div className="App">
         <Navbar showForm={this.showForm} />
         <Main
+          groupNameInput={groupNameInput}
           ifClickEvent={ifClickEvent}
+          ifClickGroup={ifClickGroup}
           groups={groups}
           eventContent={eventContent}
           eventDate={eventDate}
           eventHeader={eventHeader}
           eventTags={eventTags}
+          addGroup={this.addGroup}
           handleChange={this.handleChange}
           handleSubmit={this.handleSubmit}
         />
