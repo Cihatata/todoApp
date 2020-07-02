@@ -1,3 +1,5 @@
+@import './Base.scss';
+
 .main{
     display: flex;
     flex-wrap: wrap;
@@ -6,4 +8,72 @@
     //background-color: #ddd;
     margin: auto;
     margin-top: 10px;
+    // overflow-x: hidden;
+    &-form{
+        padding: 10px;
+        position: absolute;
+        top:72px;
+        right:0;
+        color: hotpink;
+        background-color: green;
+        z-index: 2;
+        opacity: 0;
+        transform: translateX(100%);
+        transform: .1s;
+        &-show{
+            top:72px;
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            transform: translateX(0%);
+            opacity: 1;
+            //height: 520px;
+            min-width: 305px;
+            width: 16%;
+            background-color: $logo;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            border-top-left-radius: 5px;
+            border-left:3px solid $koyu;
+            border-top:3px solid $koyu ;
+            &-label{
+                font-weight: 700;
+                display: flex;
+                flex-direction: column;
+                margin-bottom: 25px;
+                input{
+                    margin-top: 8px;
+                    border-radius: 4px;
+                    border: none;
+                    font-size: 12px;
+                    padding: 8px;
+                }
+                textarea{
+                    margin-top: 8px;
+                    padding: 8px;
+                    border: none;
+                    border-radius: 4px;
+                }
+                select{
+                    background-color: $header;
+                    padding: 4px;
+                    border-radius: 6px;
+                    border:none;
+                    margin-top: 8px;
+                    option{
+                        background-color: $header;
+                        padding: 3px;
+                    }
+                }
+            }
+            &-submit{
+                border-radius: 6px;
+                color:$acikmavi;
+                border: 2px solid $acikmavi;
+                padding: 5px;
+                background-color: $header;
+            }
+        }
+    }
 }
