@@ -49,7 +49,7 @@ function Main(props) {
           <input
             onClick={addGroup}
             type="Submit"
-            value="Ekle"
+            value={"Ekle"}
             className="main-form-show-submit"
           />
         </div>
@@ -99,7 +99,7 @@ function Main(props) {
               className="main-form-show-select"
             >
               {groups.map((val) => {
-                return <option value={val.groupName}>{val.groupName}</option>;
+                return <option key={val.groupId} value={val.groupName}>{val.groupName}</option>;
               })}
             </select>
           </label>

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Navbar from './components/Navbar';
 import Main from './components/Main';
 import './App.css';
+//import I from 'immutable';
 
 class App extends Component {
   constructor() {
@@ -92,6 +93,7 @@ class App extends Component {
         index = i;
       }
     });
+    //Immutable
     const oldCard = groups[index].cards;
     const newCard = {
       header: eventHeader,
@@ -100,6 +102,7 @@ class App extends Component {
       date: eventDate,
       tag: eventTags,
     };
+    // Immutable
     oldCard.push(newCard);
     console.log(oldCard);
     this.setState({
@@ -124,6 +127,7 @@ class App extends Component {
       groupName: groupNameInput,
       cards: [],
     };
+    // ToDo Immutable
     groups.push(newGroups);
     this.setState({ groups, groupNameInput: '', ifClickGroup: 0 });
     e.preventDefault();
@@ -148,6 +152,7 @@ class App extends Component {
   }
 
   render() {
+    //console.log((I.Map(this.state.groups2.get(2)).set('groupIda','asd')).toJS());
     const {
       groups,
       ifClickEvent,
