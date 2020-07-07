@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import Card from './Card';
 import '../styles/Column.scss';
 
@@ -13,4 +14,10 @@ function Column({ groups }) {
     );
   });
 }
-export default Column;
+
+const mapStateToProps = (state) => {
+  return {
+    groups: state.groups,
+  };
+};
+export default connect(mapStateToProps)(Column);

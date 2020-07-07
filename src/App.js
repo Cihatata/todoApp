@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Navbar from './components/Navbar';
 import Main from './components/Main';
 import './App.css';
-//import I from 'immutable';
+// import I from 'immutable';
 
 class App extends Component {
   constructor() {
@@ -165,18 +165,18 @@ class App extends Component {
     } = this.state;
     return (
       <div className="App">
-        <Navbar showForm={this.showForm} />
+        <Navbar />
         <Main
-          groupNameInput={groupNameInput}
+          // groupNameInput={groupNameInput}
           ifClickEvent={ifClickEvent}
-          ifClickGroup={ifClickGroup}
-          groups={groups}
+          // ifClickGroup={ifClickGroup}
+          // groups={groups}
           eventContent={eventContent}
           eventDate={eventDate}
           eventHeader={eventHeader}
           eventTags={eventTags}
-          addGroup={this.addGroup}
-          handleChange={this.handleChange}
+          // addGroup={this.addGroup}
+          // handleChange={this.handleChange}
           handleSubmit={this.handleSubmit}
         />
       </div>

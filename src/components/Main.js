@@ -13,7 +13,9 @@
 // export default Main;
 
 import React from 'react';
+import { connect } from 'react-redux';
 import Column from './Column';
+// import { handleChange } from '../actions/index';
 import '../styles/Main.scss';
 
 function Main(props) {
@@ -28,19 +30,18 @@ function Main(props) {
     eventDate,
     eventTags,
     handleSubmit,
-    groupNameInput,
+    // groupNameInput,
     addGroup,
   } = props;
   return (
     <main className="main">
-      <Column groups={groups} />
+      <Column />
       <div>
         <div className={'main-form' + (ifClickGroup ? '-show' : ' ')}>
           <label htmlFor="GroupName" className="main-form-show-label">
             Grup ismi
             <input
               name="groupNameInput"
-              value={groupNameInput}
               type="text"
               onChange={handleChange}
               className="main-form-show-input"
@@ -97,9 +98,14 @@ function Main(props) {
               onChange={handleChange}
               name="eventGroupName"
               className="main-form-show-select"
+              value="eventGroupName"
             >
               {groups.map((val) => {
-                return <option key={val.groupId} value={val.groupName}>{val.groupName}</option>;
+                return (
+                  <option key={val.groupId} value={val.groupName}>
+                    {val.groupName}
+                  </option>
+                );
               })}
             </select>
           </label>
@@ -110,4 +116,28 @@ function Main(props) {
   );
 }
 
-export default Main;
+const mapStateToProps = (state) => {
+  return {
+    groups: state.groups,
+    groupNameInput: state.groupNameInput,
+    ifClickGroup: state.ifClickGroup,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  console.log(dispatch);
+  return {
+    addGroup: () =>
+      dispatch({
+        type: 'ADD_GROUP',
+      }),
+    handleChange: (e) =>
+      dispatch({
+        type: 'HANDLE_CHANGE',
+        value: e.target.value,
+        name: e.target.name,
+      }),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Main);
