@@ -1,4 +1,4 @@
-import I from 'immutable';
+// import I from 'immutable';
 
 const INITIAL_STATE = {
   ifClickEvent: 0,
@@ -20,14 +20,14 @@ const INITIAL_STATE = {
           text: 'Okul Odevlerini Yapmayi iniutma',
           imgSrc: '',
           date: '29-06-2020',
-          tags: 1,
+          tags: 2,
         },
         {
           header: 'Proje Teslimi',
           text: 'Oyun Programlama odevi teslim edilecek',
           imgSrc: '',
           date: '30-06-2020',
-          tags: 1,
+          tags: 2,
         },
       ],
     },
@@ -131,6 +131,12 @@ const reducer = (state = INITIAL_STATE, action) => {
         eventTags: 2,
         eventGroupName: 'Okul',
       };
+    }
+    case 'DELETE_COLON': {
+      const { groups } = state;
+      groups.splice(action.groupId, 1);
+      console.log(action.groupId);
+      return { ...state, groups: [...state.groups] };
     }
     default:
       return state;
