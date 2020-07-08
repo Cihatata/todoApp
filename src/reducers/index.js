@@ -69,7 +69,6 @@ const INITIAL_STATE = {
 const reducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case 'HANDLE_CHANGE':
-      console.log(state);
       return { ...state, [action.name]: action.value };
     case 'ADD_GROUP': {
       const { groups, groupNameInput, ifClickGroup } = state;
@@ -122,9 +121,6 @@ const reducer = (state = INITIAL_STATE, action) => {
       };
       const oldCard = groups[index].cards;
       const test = oldCard.push(newCard);
-      console.log('test', test);
-      console.log('oldcard', oldCard);
-      console.log('Groups', groups);
       return {
         ...state,
         groups: [...state.groups],
