@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Navbar from './components/Navbar';
-import Main from './components/Main';
+import { Main, Selam } from './components/Main';
 import './App.css';
 //import I from 'immutable';
 
@@ -66,7 +66,7 @@ class App extends Component {
           ],
         },
         {
-          groupId: 4,
+          groupId: 8,
           groupName: 'E-spor',
           cards: [],
         },
@@ -89,12 +89,16 @@ class App extends Component {
     } = this.state;
     let index;
     groups.map((val, i) => {
+      console.log('val', val.groupName);
+      console.log('eventGroupName', eventGroupName);
       if (val.groupName === eventGroupName) {
+        console.log(i);
         index = i;
       }
     });
     //Immutable
     const oldCard = groups[index].cards;
+    console.log('oldCard eski hali', groups[index].cards);
     const newCard = {
       header: eventHeader,
       text: eventContent,
@@ -104,15 +108,15 @@ class App extends Component {
     };
     // Immutable
     oldCard.push(newCard);
-    console.log(oldCard);
+    console.log('oldCard yeni Cikstisi', oldCard);
     this.setState({
-      groups,
+      groups:groups,
       eventHeader: '',
       eventContent: '',
       eventDate: '',
       eventTags: 2,
       eventGroupName: 'Okul',
-      ifClickEvent: 0,
+      // ifClickEvent: 0,
     });
     e.preventDefault();
   }
@@ -120,7 +124,8 @@ class App extends Component {
   addGroup(e) {
     // const { name, value } = e.target;
     const { groups, groupNameInput } = this.state;
-    let lastGroup = groups[groups.length - 1];
+    console.log(groups.length);
+    let lastGroup = groups[groups.length - 1]; // groups[3]
     const newGroupId = lastGroup.groupId + 1;
     const newGroups = {
       groupId: newGroupId,
@@ -129,11 +134,13 @@ class App extends Component {
     };
     // ToDo Immutable
     groups.push(newGroups);
-    this.setState({ groups, groupNameInput: '', ifClickGroup: 0 });
+    this.setState({ groups:groups, groupNameInput: '', ifClickGroup: 0 });
     e.preventDefault();
   }
 
   handleChange(e) {
+    console.log('name', e.target.name);
+    console.log('value', e.target.value);
     this.setState({ [e.target.name]: e.target.value });
   }
 
@@ -164,8 +171,9 @@ class App extends Component {
     } = this.state;
     return (
       <div className="App">
+        <Selam name="Kodluyoruz" />
         <Navbar showForm={this.showForm} />
-        {/* <Main
+        <Main
           groupNameInput={groupNameInput}
           ifClickEvent={ifClickEvent}
           ifClickGroup={ifClickGroup}
@@ -177,7 +185,7 @@ class App extends Component {
           addGroup={this.addGroup}
           handleChange={this.handleChange}
           handleSubmit={this.handleSubmit}
-        /> */}
+        />
       </div>
     );
   }

@@ -16,7 +16,11 @@ import React from 'react';
 import Column from './Column';
 import '../styles/Main.scss';
 
-function Main(props) {
+export function Selam(props) {
+  return (<div><h1>KODLUYORUZ</h1><h2>{props.name}</h2></div>);
+}
+
+export function Main(props) {
   console.log(props);
   const {
     ifClickEvent,
@@ -110,4 +114,4 @@ function Main(props) {
   );
 }
 
-export default Main;
+
