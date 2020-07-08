@@ -19,11 +19,11 @@ import Column from './Column';
 import '../styles/Main.scss';
 
 function Main(props) {
-  console.log(props);
   const {
     ifClickEvent,
     ifClickGroup,
     groups,
+    eventGroupName,
     eventHeader,
     handleChange,
     eventContent,
@@ -79,9 +79,9 @@ function Main(props) {
             Tarih
             <input
               onChange={handleChange}
-              value={eventDate}
               name="eventDate"
               type="date"
+              value={eventDate}
             />
           </label>
           <label htmlFor="etiket" className="main-form-show-label">
@@ -98,7 +98,7 @@ function Main(props) {
               onChange={handleChange}
               name="eventGroupName"
               className="main-form-show-select"
-              value="eventGroupName"
+              value={eventGroupName}
             >
               {groups.map((val) => {
                 return (
@@ -109,7 +109,14 @@ function Main(props) {
               })}
             </select>
           </label>
-          <input onClick={handleSubmit} className="main-form-show-submit" type="submit" value="Ekle" />
+          <button
+            onClick={handleSubmit}
+            className="main-form-show-submit"
+            value="Ekle"
+            type="button"
+          >
+            Ekle1
+          </button>
         </form>
       </div>
     </main>
@@ -121,11 +128,16 @@ const mapStateToProps = (state) => {
     groups: state.groups,
     groupNameInput: state.groupNameInput,
     ifClickGroup: state.ifClickGroup,
+    ifClickEvent: state.ifClickEvent,
+    eventDate: state.eventDate,
+    eventHeader: state.eventHeader,
+    eventContent: state.eventContent,
+    eventGroupName: state.eventGroupName,
+    eventTags: state.eventTags,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
-  console.log(dispatch);
   return {
     addGroup: () =>
       dispatch({
@@ -136,6 +148,10 @@ const mapDispatchToProps = (dispatch) => {
         type: 'HANDLE_CHANGE',
         value: e.target.value,
         name: e.target.name,
+      }),
+    handleSubmit: () =>
+      dispatch({
+        type: 'HANDLE_SUBMIT',
       }),
   };
 };

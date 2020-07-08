@@ -1,3 +1,5 @@
+import I from 'immutable';
+
 const INITIAL_STATE = {
   ifClickEvent: 0,
   ifClickGroup: 0,
@@ -67,6 +69,7 @@ const INITIAL_STATE = {
 const reducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case 'HANDLE_CHANGE':
+      console.log(state);
       return { ...state, [action.name]: action.value };
     case 'ADD_GROUP': {
       const { groups, groupNameInput, ifClickGroup } = state;
@@ -84,14 +87,54 @@ const reducer = (state = INITIAL_STATE, action) => {
       };
     }
     case 'SHOW_FORM': {
+      // console.log(action.name);
       const { ifClickEvent, ifClickGroup } = state;
       let val;
       if (action.name === 'ifClickEvent') {
-        val=ifClickEvent;
+        val = ifClickEvent;
       } else if (action.name === 'ifClickGroup') {
         val = ifClickGroup;
       }
       return { ...state, [action.name]: !val };
+    }
+    case 'HANDLE_SUBMIT': {
+      console.log('submit', state);
+      const {
+        groups,
+        eventHeader,
+        eventContent,
+        eventDate,
+        eventTags,
+        eventGroupName,
+      } = state;
+      let index;
+      groups.map((val, i) => {
+        if (val.groupName === eventGroupName) {
+          index = i;
+        }
+      });
+      const newCard = {
+        header: eventHeader,
+        text: eventContent,
+        imgSrc: '',
+        date: eventDate,
+        tag: eventTags,
+      };
+      const oldCard = groups[index].cards;
+      const test = oldCard.push(newCard);
+      console.log('test', test);
+      console.log('oldcard', oldCard);
+      console.log('Groups', groups);
+      return {
+        ...state,
+        groups: [...state.groups],
+        ifClickEvent: false,
+        eventHeader: '',
+        eventContent: '',
+        eventDate: '',
+        eventTags: 2,
+        eventGroupName: 'Okul',
+      };
     }
     default:
       return state;

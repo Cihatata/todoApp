@@ -39,8 +39,8 @@ Navbar.propTypes = {
 
 const mapStateToProps = (state) => {
   return {
-    ifClickEvent: state.ifClickEvent,
-    ifClickGroup: state.ifClickGroup,
+    // ifClickEvent: state.ifClickEvent,
+    // ifClickGroup: state.ifClickGroup,
   };
 };
 
