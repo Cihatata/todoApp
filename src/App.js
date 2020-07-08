@@ -138,14 +138,13 @@ class App extends Component {
   }
 
   showForm(e) {
+    console.log(e.target.name);
     const { name } = e.target;
     const { ifClickEvent, ifClickGroup } = this.state;
     let val;
     if (name === 'ifClickEvent') {
-      console.log('value ifClickE');
       val = ifClickEvent;
     } else if (name === 'ifClickGroup') {
-      console.log('else if');
       val = ifClickGroup;
     }
     this.setState({ [name]: !val });
@@ -166,7 +165,7 @@ class App extends Component {
     return (
       <div className="App">
         <Navbar showForm={this.showForm} />
-        <Main
+        {/* <Main
           groupNameInput={groupNameInput}
           ifClickEvent={ifClickEvent}
           ifClickGroup={ifClickGroup}
@@ -178,7 +177,7 @@ class App extends Component {
           addGroup={this.addGroup}
           handleChange={this.handleChange}
           handleSubmit={this.handleSubmit}
-        />
+        /> */}
       </div>
     );
   }
