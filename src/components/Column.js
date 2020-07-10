@@ -16,7 +16,7 @@ function Column({ groups, deleteColon }) {
         >
           Kolunu Sil
         </button>
-        <Card Cards={group.cards} />
+        <Card groupId={group.groupId} Cards={group.cards} />
       </section>
     );
   });
@@ -36,6 +36,6 @@ const mapDispatchToProps = (dispatch) => {
         groupId: id,
       }),
   };
-}
+};
 
-export default connect(mapStateToProps,mapDispatchToProps)(Column);
+export default connect(mapStateToProps, mapDispatchToProps)(Column);

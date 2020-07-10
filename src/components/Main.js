@@ -86,6 +86,7 @@ function Main(props) {
               className="main-form-show-select"
               value={eventGroupName}
             >
+            <option>Kolon seciniz</option>
               {groups.map((val) => {
                 return (
                   <option key={val.groupId} value={val.groupName}>
@@ -101,7 +102,7 @@ function Main(props) {
             value="Ekle"
             type="button"
           >
-            Ekle1
+            Ekle
           </button>
         </form>
       </div>

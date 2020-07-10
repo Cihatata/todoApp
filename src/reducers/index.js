@@ -108,6 +108,7 @@ const reducer = (state = INITIAL_STATE, action) => {
       } = state;
       let index;
       groups.map((val, i) => {
+        // eventGroupName Bos gelebiliyor.
         if (val.groupName === eventGroupName) {
           index = i;
         }
@@ -120,7 +121,8 @@ const reducer = (state = INITIAL_STATE, action) => {
         tag: eventTags,
       };
       const oldCard = groups[index].cards;
-      const test = oldCard.push(newCard);
+      oldCard.push(newCard);
+      console.log('new', groups);
       return {
         ...state,
         groups: [...state.groups],
@@ -135,8 +137,27 @@ const reducer = (state = INITIAL_STATE, action) => {
     case 'DELETE_COLON': {
       const { groups } = state;
       groups.splice(action.groupId, 1);
-      console.log(action.groupId);
       return { ...state, groups: [...state.groups] };
+    }
+    case 'DELETE_CARD': {
+      let { groups } = state;
+      console.log(action.groupId);
+      console.log(action.cardIndex);
+      let index;
+      groups.map((val, i) => {
+        // eventGroupName Bos gelebiliyor.
+        if (val.groupId === action.groupId) {
+          index = i;
+        }
+      });
+      groups = groups[index].cards.splice(action.cardIndex, 1);
+      //console.log('oldCard', oldCard);
+      // oldCard.splice(action.cardIndex, 1);
+      console.log('newCard', groups);
+      return {
+        ...state,
+        groups: [...state.groups],
+      };
     }
     default:
       return state;
