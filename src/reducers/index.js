@@ -1,4 +1,4 @@
-// import I from 'immutable';
+import I from 'immutable';
 
 const INITIAL_STATE = {
   ifClickEvent: 0,
@@ -68,33 +68,57 @@ const INITIAL_STATE = {
 
 const reducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case 'HANDLE_CHANGE':
-      return { ...state, [action.name]: action.value };
+    case 'HANDLE_CHANGE': {
+      const stateImmutable = I.Map(state);
+      const newState = stateImmutable.set(action.name, action.value);
+      // console.log('new', newState);
+      return newState;
+    }
     case 'ADD_GROUP': {
-      const { groups, groupNameInput, ifClickGroup } = state;
+     //  const { groups, groupNameInput } = I.Map(state).toJS();
+      const groups = I.List(I.Map(state).get('groups', [' '])).toJS();
+      const groupNameInput = I.Map(state).get('groupNameInput', ' ');
       const lastGroup = groups[groups.length - 1];
-      const newGroupId = lastGroup.groupId + 1;
+      let newGroupId;
+      if (lastGroup) {
+        // Eger Group'larin hepsi silindiyse
+        newGroupId = lastGroup.groupId + 1;
+      } else {
+        newGroupId = 0;
+      }
       const newGroups = {
         groupId: newGroupId,
         groupName: groupNameInput,
         cards: [],
       };
+      const immutableGroups = I.List(groups).push(newGroups);
       return {
-        ...state,
-        groups: [...state.groups, newGroups],
+        groups: immutableGroups,
         ifClickGroup: false,
+        ifClickEvent: false,
+        groupNameInput: '',
+        eventHeader: '',
+        eventContent: '',
+        eventTags: '2',
+        eventDate: '',
+        eventGroupName: 'Okul',
       };
     }
     case 'SHOW_FORM': {
       // console.log(action.name);
-      const { ifClickEvent, ifClickGroup } = state;
+      const stateImmutable = I.Map(state);
+      // const { ifClickEvent, ifClickGroup } = stateImmutable.toJS();
+      const ifClickEvent = stateImmutable.get('ifClickEvent', 'err');
+      const ifClickGroup = stateImmutable.get('ifClickGroup', 'err');
+      // console.log('if', ifClickEvent);
       let val;
       if (action.name === 'ifClickEvent') {
         val = ifClickEvent;
       } else if (action.name === 'ifClickGroup') {
         val = ifClickGroup;
       }
-      return { ...state, [action.name]: !val };
+      const newState = stateImmutable.set(action.name, !val);
+      return newState;
     }
     case 'HANDLE_SUBMIT': {
       console.log('submit', state);
@@ -105,8 +129,9 @@ const reducer = (state = INITIAL_STATE, action) => {
         eventDate,
         eventTags,
         eventGroupName,
-      } = state;
+      } = I.Map(state).toJS();
       let index;
+      console.log(groups);
       groups.map((val, i) => {
         // eventGroupName Bos gelebiliyor.
         if (val.groupName === eventGroupName) {
@@ -120,13 +145,21 @@ const reducer = (state = INITIAL_STATE, action) => {
         date: eventDate,
         tag: eventTags,
       };
-      const oldCard = groups[index].cards;
-      oldCard.push(newCard);
+      const oldCards = I.Map(I.List(groups).get(index)).get('cards');
+      const newCards = I.List(oldCards).push(newCard);
+      const xd = I.Map(I.List(groups).get(index, 0)).update('cards', val => newCards);
+      let newGroups = groups.map((val, i) => {
+        if (i === index) {
+          return xd.toJS();
+        }
+        return val;
+      });
       console.log('new', groups);
       return {
         ...state,
-        groups: [...state.groups],
+        groups: newGroups, // Guncellenmis kolonu gecmem lazim.
         ifClickEvent: false,
+        ifClickGroup: false,
         eventHeader: '',
         eventContent: '',
         eventDate: '',
@@ -135,12 +168,13 @@ const reducer = (state = INITIAL_STATE, action) => {
       };
     }
     case 'DELETE_COLON': {
-      const { groups } = state;
-      groups.splice(action.groupId, 1);
-      return { ...state, groups: [...state.groups] };
+      const groups = I.List(I.Map(state).get('groups', [' ']));
+      const newGroups = groups.delete(action.groupId);
+      console.log(newGroups.toJS());
+      return { ...state, groups: newGroups };
     }
     case 'DELETE_CARD': {
-      let { groups } = state;
+      const groups = I.List(I.Map(state).get('groups', [' '])).toJS();
       console.log(action.groupId);
       console.log(action.cardIndex);
       let index;
@@ -150,13 +184,26 @@ const reducer = (state = INITIAL_STATE, action) => {
           index = i;
         }
       });
-      groups = groups[index].cards.splice(action.cardIndex, 1);
-      //console.log('oldCard', oldCard);
+      console.log('groups', groups);
+      console.log('index', index);
+      const cards = I.Map(I.List(groups).get(index), 0).get('cards', [' ']);
+      const newCards = I.List(cards).delete(action.cardIndex);
+      const newGroup = I.Map(I.List(groups).get(index, 0)).update('cards', val => newCards);
+      const responseGroup = groups.map((val, i) => {
+        if (index === i) {
+          return newGroup.toJS();
+        }
+        return val;
+      });
+      console.log('cards', cards);
+      console.log('newGroup', newGroup.toJS());
+      // groups[index].cards.splice(action.cardIndex, 1);
+      // console.log('oldCard', oldCard);
       // oldCard.splice(action.cardIndex, 1);
-      console.log('newCard', groups);
+      console.log('newCard', newCards.toJS());
       return {
         ...state,
-        groups: [...state.groups],
+        groups: responseGroup,
       };
     }
     default:

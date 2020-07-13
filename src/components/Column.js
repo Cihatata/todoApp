@@ -1,13 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import I from 'immutable';
 import Card from './Card';
 import '../styles/Column.scss';
 
 function Column({ groups, deleteColon }) {
   console.log(groups);
-  return groups.map((group,i) => {
+  return groups.map((group, i) => {
     return (
-      <section className="column" key={group.groupId}>
+      <section className="column" key={group.groupId + Math.random()}>
         <h2 className="column-header">{group.groupName}</h2>
         <button
           onClick={() => {deleteColon(i)}}
@@ -23,8 +24,9 @@ function Column({ groups, deleteColon }) {
 }
 
 const mapStateToProps = (state) => {
+  console.log(I.Map(state).get('ifClickEvent'));
   return {
-    groups: state.groups,
+    groups: I.Map(state).get('groups', ['']),
   };
 };
 

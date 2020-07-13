@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import '../styles/Card.scss';
 
 function Card({ Cards = ['any'], groupId, deleteCard }) {
-  // console.log(Cards[0]);
   return Cards.map((card, i) => {
     if (card !== 'any') {
       return (

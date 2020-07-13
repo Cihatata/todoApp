@@ -5,5 +5,5 @@
 *{
     box-sizing: border-box;
     font-family:'Oxygen' ,Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-    overflow: hidden;
+    overflow-x: hidden;
 }
