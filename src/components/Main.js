@@ -1,27 +1,16 @@
-// import React, { PureComponent } from 'react';
-
-// class Main extends PureComponent {
-//   render() {
-//     return (
-//       <main className="main">
-//         <div>{this.props.groups[0].groupName}</div>
-//       </main>
-//     );
-//   }
-// }
-
-// export default Main;
-
 import React from 'react';
+import { connect } from 'react-redux';
+import I from 'immutable';
 import Column from './Column';
+// import { handleChange } from '../actions/index';
 import '../styles/Main.scss';
 
 function Main(props) {
-  console.log(props);
   const {
     ifClickEvent,
     ifClickGroup,
     groups,
+    eventGroupName,
     eventHeader,
     handleChange,
     eventContent,
@@ -31,19 +20,20 @@ function Main(props) {
     groupNameInput,
     addGroup,
   } = props;
+  console.log(groups);
   return (
     <main className="main">
-      <Column groups={groups} />
+      <Column />
       <div>
         <div className={'main-form' + (ifClickGroup ? '-show' : ' ')}>
           <label htmlFor="GroupName" className="main-form-show-label">
             Grup ismi
             <input
               name="groupNameInput"
-              value={groupNameInput}
               type="text"
               onChange={handleChange}
               className="main-form-show-input"
+              value={groupNameInput}
             />
           </label>
           <input
@@ -78,9 +68,9 @@ function Main(props) {
             Tarih
             <input
               onChange={handleChange}
-              value={eventDate}
               name="eventDate"
               type="date"
+              value={eventDate}
             />
           </label>
           <label htmlFor="etiket" className="main-form-show-label">
@@ -97,17 +87,68 @@ function Main(props) {
               onChange={handleChange}
               name="eventGroupName"
               className="main-form-show-select"
+              value={eventGroupName}
             >
+            <option>Kolon seciniz</option>
               {groups.map((val) => {
-                return <option key={val.groupId} value={val.groupName}>{val.groupName}</option>;
+                return (
+                  <option
+                    key={val.groupId + Math.random()}
+                    value={val.groupName}
+                  >
+                    {val.groupName}
+                  </option>
+                );
               })}
             </select>
           </label>
-          <input onClick={handleSubmit} className="main-form-show-submit" type="submit" value="Ekle" />
+          <button
+            onClick={handleSubmit}
+            className="main-form-show-submit"
+            value="Ekle"
+            type="button"
+          >
+            Ekle
+          </button>
         </form>
       </div>
     </main>
   );
 }
 
-export default Main;
+const mapStateToProps = (state) => {
+  console.log(I.Map(state).get('groups', [' ']));
+  return {
+    // Kod Tekrari Dogrusu nedir ?
+    groups: I.Map(state).get('groups', [' ']),
+    groupNameInput: I.Map(state).get('groupNameInput', ' '),
+    ifClickGroup: I.Map(state).get('ifClickGroup', false),
+    ifClickEvent: I.Map(state).get('ifClickEvent', false),
+    eventDate: I.Map(state).get('eventDate', ' '),
+    eventHeader: I.Map(state).get('eventHeader', ' '),
+    eventContent: I.Map(state).get('eventContent', ' '),
+    eventGroupName: I.Map(state).get('eventGroupName', ' '),
+    eventTags: I.Map(state).get('eventTags', 2),
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addGroup: () =>
+      dispatch({
+        type: 'ADD_GROUP',
+      }),
+    handleChange: (e) =>
+      dispatch({
+        type: 'HANDLE_CHANGE',
+        value: e.target.value,
+        name: e.target.name,
+      }),
+    handleSubmit: () =>
+      dispatch({
+        type: 'HANDLE_SUBMIT',
+      }),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Main);

@@ -7,6 +7,8 @@
     min-width: 365px;
     //#ToDo MARGIN kaldir sonradan
     margin-left: 3px;
+    display: flex;
+    flex-direction: column;
     @include mq(){
         width: 30%;
         border-right: 5px dashed $acikmavi;
@@ -21,6 +23,24 @@
         color: $acikmavi;
         padding: 3px;
         border-bottom: 2px solid $logo;
+    }
+    &-button{
+        padding: 3px;
+        font-size: 12px;
+        font-weight: 700;
+        height:40px;
+        width: 90px;
+        background-color:$acikmavi;
+        color:$koyusari;
+        margin-left: auto;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        border:2px solid $koyu;
+        @include mq(){
+            font-size: 16px;
+            margin-right: 10px;
+            width: 110px;
+        }
     }
 
 }

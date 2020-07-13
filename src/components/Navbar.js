@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import '../styles/Navbar.scss';
 
@@ -35,4 +36,21 @@ class Navbar extends PureComponent {
 Navbar.propTypes = {
   showForm: PropTypes.func.isRequired,
 };
-export default Navbar;
+
+const mapStateToProps = (state) => {
+  return {
+    // ifClickEvent: state.ifClickEvent,
+    // ifClickGroup: state.ifClickGroup,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    showForm: (e) =>
+      dispatch({
+        type: 'SHOW_FORM',
+        name: e.target.name,
+      }),
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Navbar);
