@@ -63,6 +63,19 @@ const INITIAL_STATE = {
       groupName: 'E-spor',
       cards: [],
     },
+    {
+      groupId: 5,
+      groupName: 'aasd',
+      cards: [
+        {
+          header: 'asdad',
+          text: 'asdadad',
+          imgSrc: ' ',
+          date: ' asdsad',
+          tag: 3,
+        },
+      ],
+    },
   ],
 };
 
@@ -70,6 +83,9 @@ const reducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case 'HANDLE_CHANGE': {
       const stateImmutable = I.Map(state);
+      console.log('action name', action.name);
+      console.log('action value', action.name);
+      console.log(state.groupNameInput);
       const newState = stateImmutable.set(action.name, action.value);
       // console.log('new', newState);
       return newState;
@@ -135,7 +151,7 @@ const reducer = (state = INITIAL_STATE, action) => {
       groups.map((val, i) => {
         // eventGroupName Bos gelebiliyor.
         if (val.groupName === eventGroupName) {
-          index = i;
+          index =i;
         }
       });
       const newCard = {
@@ -145,8 +161,10 @@ const reducer = (state = INITIAL_STATE, action) => {
         date: eventDate,
         tag: eventTags,
       };
-      const oldCards = I.Map(I.List(groups).get(index)).get('cards');
+      const oldCards = I.Map(I.List(groups).get(index)).get('cards', [' ']);
+      console.log('oldCards', oldCards);
       const newCards = I.List(oldCards).push(newCard);
+      console.log('newCards', newCards.toJS());
       const xd = I.Map(I.List(groups).get(index, 0)).update('cards', val => newCards);
       let newGroups = groups.map((val, i) => {
         if (i === index) {
@@ -156,15 +174,15 @@ const reducer = (state = INITIAL_STATE, action) => {
       });
       console.log('new', groups);
       return {
-        ...state,
+        // ...state,
         groups: newGroups, // Guncellenmis kolonu gecmem lazim.
-        ifClickEvent: false,
-        ifClickGroup: false,
-        eventHeader: '',
-        eventContent: '',
-        eventDate: '',
-        eventTags: 2,
-        eventGroupName: 'Okul',
+        // ifClickEvent: false,
+        // ifClickGroup: false,
+        // eventHeader: '',
+        // eventContent: '',
+        // eventDate: '',
+        // eventTags: 2,
+        // eventGroupName: 'Okul',
       };
     }
     case 'DELETE_COLON': {
