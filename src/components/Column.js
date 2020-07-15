@@ -5,7 +5,6 @@ import Card from './Card';
 import '../styles/Column.scss';
 
 function Column({ groups, deleteColon }) {
-  console.log(groups);
   return groups.map((group, i) => {
     return (
       <section className="column" key={group.groupId + Math.random()}>
@@ -24,7 +23,6 @@ function Column({ groups, deleteColon }) {
 }
 
 const mapStateToProps = (state) => {
-  console.log(I.Map(state).get('ifClickEvent'));
   return {
     groups: I.Map(state).get('groups', ['']),
   };

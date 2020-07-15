@@ -118,6 +118,7 @@ const reducer = (state = INITIAL_STATE, action) => {
         val = ifClickGroup;
       }
       const newState = stateImmutable.set(action.name, !val);
+      console.log(newState.toJS());
       return newState;
     }
     case 'HANDLE_SUBMIT': {

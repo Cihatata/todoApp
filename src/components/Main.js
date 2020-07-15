@@ -117,7 +117,6 @@ function Main(props) {
 }
 
 const mapStateToProps = (state) => {
-  console.log(I.Map(state).get('groups', [' ']));
   return {
     // Kod Tekrari Dogrusu nedir ?
     groups: I.Map(state).get('groups', [' ']),

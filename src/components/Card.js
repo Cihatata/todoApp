@@ -20,7 +20,9 @@ function Card({ Cards = ['any'], groupId, deleteCard }) {
           </div>
           <div className="card-buttons">
             <button
-              onClick={() => {deleteCard(groupId, i)}}
+              onClick={() => {
+                deleteCard(groupId, i)}
+              }
               type="button"
             >
               Karti Sil
