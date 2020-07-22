@@ -8,13 +8,13 @@ class Navbar extends PureComponent {
     const { showForm } = this.props;
     return (
       <header className="header">
-        <div className="header-logo">KodTodo</div>
-        <nav className="header-menu">
+        <div className="header__logo">KodTodo</div>
+        <nav className="header__menu">
           <button
             value="ifClickEvent"
             onClick={showForm}
             type="button"
-            className="header-menu-button"
+            className="header__menu--button"
             name="ifClickEvent"
           >
             Etkinlik Ekle
@@ -24,7 +24,7 @@ class Navbar extends PureComponent {
             value="ifClickGroup"
             name="ifClickGroup"
             type="button"
-            className="header-menu-button"
+            className="header__menu--button"
           >
             Grup Ekle
           </button>

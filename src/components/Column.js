@@ -8,10 +8,10 @@ function Column({ groups, deleteColon }) {
   return groups.map((group, i) => {
     return (
       <section className="column" key={group.groupId + Math.random()}>
-        <h2 className="column-header">{group.groupName}</h2>
+        <h2 className="column__header">{group.groupName}</h2>
         <button
           onClick={() => {deleteColon(i)}}
-          className="column-button"
+          className="column__button"
           type="button"
         >
           Kolunu Sil

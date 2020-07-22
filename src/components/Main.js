@@ -25,14 +25,14 @@ function Main(props) {
     <main className="main">
       <Column />
       <div>
-        <div className={'main-form' + (ifClickGroup ? '-show' : ' ')}>
-          <label htmlFor="GroupName" className="main-form-show-label">
+        <div className={'main__form' + (ifClickGroup ? '--show' : ' ')}>
+          <label htmlFor="GroupName" className="main__form--show-label">
             Grup ismi
             <input
               name="groupNameInput"
               type="text"
               onChange={handleChange}
-              className="main-form-show-input"
+              className="main__form--show-input"
               value={groupNameInput}
             />
           </label>
@@ -40,31 +40,31 @@ function Main(props) {
             onClick={addGroup}
             type="Submit"
             value={"Ekle"}
-            className="main-form-show-submit"
+            className="main__form--show-submit"
           />
         </div>
-        <form className={'main-form' + (ifClickEvent ? '-show' : ' ')}>
-          <label htmlFor="baslik" className="main-form-show-label">
+        <form className={'main__form' + (ifClickEvent ? '--show' : ' ')}>
+          <label htmlFor="baslik" className="main__form--show-label">
             Etkinlik Basligi
             <input
               name="eventHeader"
               onChange={handleChange}
               type="text"
-              className="main-form-show-input"
+              className="main__form--show-input"
               value={eventHeader}
             />
           </label>
-          <label htmlFor="icerik" className="main-form-show-label">
+          <label htmlFor="icerik" className="main__form--show-label">
             Etkinlik Icerigi
             <textarea
               name="eventContent"
               type="text"
-              className="main-form-show-input"
+              className="main__form--show-input"
               onChange={handleChange}
               value={eventContent}
             />
           </label>
-          <label htmlFor="tarih" className="main-form-show-label">
+          <label htmlFor="tarih" className="main__form--show-label">
             Tarih
             <input
               onChange={handleChange}
@@ -73,7 +73,7 @@ function Main(props) {
               value={eventDate}
             />
           </label>
-          <label htmlFor="etiket" className="main-form-show-label">
+          <label htmlFor="etiket" className="main__form--show-label">
             Etiket
             <select onChange={handleChange} name="eventTags" value={eventTags}>
               <option value="2">Dusuk</option>
@@ -81,12 +81,12 @@ function Main(props) {
               <option value="4">Yuksek</option>
             </select>
           </label>
-          <label htmlFor="group" className="main-form-show-label">
+          <label htmlFor="group" className="main__form--show-label">
             Grup
             <select
               onChange={handleChange}
               name="eventGroupName"
-              className="main-form-show-select"
+              className="main__form--show-select"
               value={eventGroupName}
             >
             <option>Kolon seciniz</option>
@@ -104,7 +104,7 @@ function Main(props) {
           </label>
           <button
             onClick={handleSubmit}
-            className="main-form-show-submit"
+            className="main__form--show-submit"
             value="Ekle"
             type="button"
           >

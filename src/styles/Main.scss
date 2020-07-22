@@ -9,7 +9,7 @@
     margin: auto;
     margin-top: 10px;
     // overflow-x: hidden;
-    &-form{
+    &__form{
         padding: 10px;
         position: absolute;
         top:72px;
@@ -20,7 +20,7 @@
         opacity: 0;
         transform: translateX(100%);
         transform: .1s;
-        &-show{
+        &--show{
             top:72px;
             position: absolute;
             right: 0;
@@ -75,7 +75,7 @@
                 background-color: $header;
             }
         }
-        &-showGroup{
+        &--showGroup{
             background-color: red;
         }
     }
