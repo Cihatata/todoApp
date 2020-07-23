@@ -1,14 +1,18 @@
 import I from 'immutable';
 
 const INITIAL_STATE = {
-  ifClickEvent: 0,
-  ifClickGroup: 0,
+  ifClickEvent: false,
+  ifClickGroup: false,
+  toogleEdit: false,
   groupNameInput: '',
   eventHeader: '',
   eventContent: '',
   eventTags: '2',
   eventDate: '',
   eventGroupName: 'Okul',
+  editCardIndex: 0,
+  editGroupId: 0,
+  navbarButtons: false,
   // todo Buradaki Default deger dinamiklesecek
   groups: [
     {
@@ -66,6 +70,77 @@ const INITIAL_STATE = {
   ],
 };
 
+function deleteCard(state, action) {
+  const groups = I.List(I.Map(state).get('groups', [' '])).toJS();
+  let index;
+  groups.map((val, i) => {
+    // eventGroupName Bos gelebiliyor.
+    if (val.groupId === action.groupId) {
+      index = i;
+    }
+  });
+  const cards = I.Map(I.List(groups).get(index), 0).get('cards', [' ']);
+  const newCards = I.List(cards).delete(action.cardIndex);
+  const newGroup = I.Map(I.List(groups).get(index, 0)).update('cards', val => newCards);
+  const responseGroup = groups.map((val, i) => {
+    if (index === i) {
+      return newGroup.toJS();
+    }
+    return val;
+  });
+  console.log(responseGroup);
+  return {
+    ...state,
+    groups: responseGroup,
+  };
+}
+
+function addCard(state) {
+  const {
+    groups,
+    eventHeader,
+    eventContent,
+    eventDate,
+    eventTags,
+    eventGroupName,
+  } = I.Map(state).toJS();
+  let index;
+  console.log('eventheader', eventHeader);
+  groups.map((val, i) => {
+    // eventGroupName Bos gelebiliyor.
+    if (val.groupName === eventGroupName) {
+      index = i;
+    }
+  });
+  const newCard = {
+    header: eventHeader,
+    text: eventContent,
+    imgSrc: '',
+    date: eventDate,
+    tag: eventTags,
+  };
+  const oldCards = I.Map(I.List(groups).get(index)).get('cards');
+  const newCards = I.List(oldCards).push(newCard);
+  const xd = I.Map(I.List(groups).get(index, 0)).update('cards', val => newCards);
+  let newGroups = groups.map((val, i) => {
+    if (i === index) {
+      return xd.toJS();
+    }
+    return val;
+  });
+  console.log('new', groups);
+  return {
+    ...state,
+    groups: newGroups, // Guncellenmis kolonu gecmem lazim.
+    ifClickEvent: false,
+    ifClickGroup: false,
+    eventHeader: '',
+    eventContent: '',
+    eventDate: '',
+    eventTags: 2,
+    eventGroupName: 'Okul',
+  };
+}
 const reducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case 'HANDLE_CHANGE': {
@@ -110,6 +185,7 @@ const reducer = (state = INITIAL_STATE, action) => {
       // const { ifClickEvent, ifClickGroup } = stateImmutable.toJS();
       const ifClickEvent = stateImmutable.get('ifClickEvent', 'err');
       const ifClickGroup = stateImmutable.get('ifClickGroup', 'err');
+      const groups = stateImmutable.get('groups', 'err');
       // console.log('if', ifClickEvent);
       let val;
       if (action.name === 'ifClickEvent') {
@@ -117,12 +193,54 @@ const reducer = (state = INITIAL_STATE, action) => {
       } else if (action.name === 'ifClickGroup') {
         val = ifClickGroup;
       }
-      const newState = stateImmutable.set(action.name, !val);
+      const newState = stateImmutable
+        .set(action.name, !val)
+        .set('toogleEdit', false)
+        .set('selectedGroupName', true)
+        .set('groups', groups)
+        .set('eventHeader', '')
+        .set('eventContent', '')
+        .set('eventGroupName', '')
+        .set('eventDate', '');
       console.log(newState.toJS());
       return newState;
     }
+    case 'ADD_CARD_INCOLUMN': {
+      const { groupName } = action;
+      console.log('action', groupName);
+      return {
+        groups: state.groups,
+        ifClickEvent: true,
+        eventGroupName: groupName,
+        selectedGroupName: false,
+      }
+    }
+    case 'EDIT_CARD': {
+      const { card, cardIndex, groupId } = action;
+      const dateArr = card.date.split('-');
+      const newDate = `${dateArr[2]}-${dateArr[1]}-${dateArr[0]}`;
+      const groups = I.Map(state).get('groups', 'err');
+      return {
+        groups,
+        ifClickEvent: true,
+        eventContent: card.text,
+        eventHeader: card.header,
+        eventDate: newDate,
+        eventTags: card.tags,
+        toogleEdit: true,
+        editCardIndex: cardIndex,
+        editGroupId: groupId,
+      };
+    }
+    case 'UPDATE': {
+      const deletedCard = deleteCard(state, action);
+      console.log('deletedCard', deletedCard);
+      const updated = addCard(deleteCard);
+      console.log('updated', updated);
+      return updated;
+    }
     case 'HANDLE_SUBMIT': {
-      console.log('submit', state);
+      console.log('submitasdasdads');
       const {
         groups,
         eventHeader,
@@ -175,37 +293,14 @@ const reducer = (state = INITIAL_STATE, action) => {
       return { ...state, groups: newGroups };
     }
     case 'DELETE_CARD': {
-      const groups = I.List(I.Map(state).get('groups', [' '])).toJS();
-      console.log(action.groupId);
-      console.log(action.cardIndex);
-      let index;
-      groups.map((val, i) => {
-        // eventGroupName Bos gelebiliyor.
-        if (val.groupId === action.groupId) {
-          index = i;
-        }
-      });
-      console.log('groups', groups);
-      console.log('index', index);
-      const cards = I.Map(I.List(groups).get(index), 0).get('cards', [' ']);
-      const newCards = I.List(cards).delete(action.cardIndex);
-      const newGroup = I.Map(I.List(groups).get(index, 0)).update('cards', val => newCards);
-      const responseGroup = groups.map((val, i) => {
-        if (index === i) {
-          return newGroup.toJS();
-        }
-        return val;
-      });
-      console.log('cards', cards);
-      console.log('newGroup', newGroup.toJS());
-      // groups[index].cards.splice(action.cardIndex, 1);
-      // console.log('oldCard', oldCard);
-      // oldCard.splice(action.cardIndex, 1);
-      console.log('newCard', newCards.toJS());
+      const newState = deleteCard(state, action);
+      return newState;
+    }
+    case 'NAVBAR_BUTTONS': {
       return {
         ...state,
-        groups: responseGroup,
-      };
+        navbarButtons: !state.navbarButtons,
+      }
     }
     default:
       return state;

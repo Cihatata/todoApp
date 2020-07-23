@@ -42,5 +42,23 @@
             width: 110px;
         }
     }
+    &__routeButton{
+        padding: 3px;
+        font-size: 12px;
+        font-weight: 700;
+        height:40px;
+        width: 90px;
+        background-color:$logo;
+        color:$koyu;
+        margin-left: auto;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        border:2px solid $koyu;
+        @include mq(){
+            font-size: 16px;
+            margin-right: 10px;
+            width: 110px;
+        }
+    }
 
 }

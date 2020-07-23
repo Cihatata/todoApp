@@ -74,6 +74,13 @@
                 padding: 5px;
                 background-color: $header;
             }
+            &-update{
+                border-radius: 6px;
+                color:black;
+                border: 2px solid $header;
+                padding: 5px;
+                background-color: $acikmavi;
+            }
         }
         &--showGroup{
             background-color: red;

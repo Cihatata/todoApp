@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import '../styles/Card.scss';
 
-function Card({ Cards = ['any'], groupId, deleteCard }) {
+function Card({ Cards = ['any'], groupId, deleteCard, editCard }) {
   return Cards.map((card, i) => {
     if (card !== 'any') {
       return (
@@ -27,7 +27,14 @@ function Card({ Cards = ['any'], groupId, deleteCard }) {
             >
               Karti Sil
             </button>
-            <button type="button">Kart Duzenle</button>
+            <button
+              onClick={() => {
+                editCard(card, i, groupId)}
+              }
+              type="button"
+            >
+              Kart Duzenle
+             </button>
           </div>
         </section>
       );
@@ -43,6 +50,13 @@ const mapDispatchToProps = (dispatch) => {
         type: 'DELETE_CARD',
         groupId,
         cardIndex,
+      }),
+    editCard: (card, cardIndex, groupId) =>
+      dispatch({
+        type: 'EDIT_CARD',
+        card,
+        cardIndex,
+        groupId,
       }),
   };
 };

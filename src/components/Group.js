@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import I from 'immutable';
 import Card from './Card';
+import '../styles/Column.scss';
 
 function Group(props) {
     console.log(props);
@@ -20,10 +20,12 @@ function Group(props) {
   }
   return block.map((val) => {
     return (
-      <section className="column" key={val.groupId + Math.random()}>
-        <h2 className="column-header">{val.groupName}</h2>
-        <Card groupId={val.groupId} Cards={val.cards} />
-      </section>
+      <center key={Math.random()}>
+        <section className="column" key={val.groupId + Math.random()}>
+          <h2 className="column__header">{val.groupName}</h2>
+          <Card groupId={val.groupId} Cards={val.cards} />
+        </section>
+      </center>
     );
   });
 }

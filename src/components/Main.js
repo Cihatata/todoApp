@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import I from 'immutable';
 import Column from './Column';
-// import { handleChange } from '../actions/index';
 import '../styles/Main.scss';
 
 function Main(props) {
@@ -19,6 +18,11 @@ function Main(props) {
     handleSubmit,
     groupNameInput,
     addGroup,
+    toogleEdit,
+    update,
+    editGroupId,
+    editCardIndex,
+    selectedGroupName,
   } = props;
   console.log(groups);
   return (
@@ -81,35 +85,46 @@ function Main(props) {
               <option value="4">Yuksek</option>
             </select>
           </label>
-          <label htmlFor="group" className="main__form--show-label">
-            Grup
-            <select
-              onChange={handleChange}
-              name="eventGroupName"
-              className="main__form--show-select"
-              value={eventGroupName}
+          {selectedGroupName && (
+            <label htmlFor="group" className="main__form--show-label">
+              Grup
+              <select
+                onChange={handleChange}
+                name="eventGroupName"
+                className="main__form--show-select"
+                value={eventGroupName}
+              >
+                <option>Kolon seciniz</option>
+                {groups.map((val) => {
+                  return (
+                    <option
+                      key={val.groupId + Math.random()}
+                      value={val.groupName}
+                    >
+                      {val.groupName}
+                    </option>
+                  );
+                })}
+              </select>
+            </label> )
+          }
+          {toogleEdit ? (
+            <button
+              onClick={() => update(editGroupId, editCardIndex)}
+              className="main__form--show-update"
+              type="button"
             >
-            <option>Kolon seciniz</option>
-              {groups.map((val) => {
-                return (
-                  <option
-                    key={val.groupId + Math.random()}
-                    value={val.groupName}
-                  >
-                    {val.groupName}
-                  </option>
-                );
-              })}
-            </select>
-          </label>
-          <button
-            onClick={handleSubmit}
-            className="main__form--show-submit"
-            value="Ekle"
-            type="button"
-          >
-            Ekle
-          </button>
+              Guncelle
+            </button>
+          ) : (
+            <button
+              onClick={handleSubmit}
+              className="main__form--show-submit"
+              type="button"
+            >
+              Ekle
+            </button>)
+          }
         </form>
       </div>
     </main>
@@ -119,15 +134,19 @@ function Main(props) {
 const mapStateToProps = (state) => {
   return {
     // Kod Tekrari Dogrusu nedir ?
-    groups: I.Map(state).get('groups', [' ']),
-    groupNameInput: I.Map(state).get('groupNameInput', ' '),
+    groups: I.Map(state).get('groups', ['']),
+    groupNameInput: I.Map(state).get('groupNameInput', ''),
     ifClickGroup: I.Map(state).get('ifClickGroup', false),
     ifClickEvent: I.Map(state).get('ifClickEvent', false),
-    eventDate: I.Map(state).get('eventDate', ' '),
-    eventHeader: I.Map(state).get('eventHeader', ' '),
-    eventContent: I.Map(state).get('eventContent', ' '),
+    toogleEdit: I.Map(state).get('toogleEdit', false),
+    eventDate: I.Map(state).get('eventDate', ''),
+    eventHeader: I.Map(state).get('eventHeader', ''),
+    eventContent: I.Map(state).get('eventContent', ''),
     eventGroupName: I.Map(state).get('eventGroupName', ' '),
     eventTags: I.Map(state).get('eventTags', 2),
+    editCardIndex: I.Map(state).get('editCardIndex', ''),
+    editGroupId: I.Map(state).get('editGroupId', ''),
+    selectedGroupName: I.Map(state).get('selectedGroupName', true),
   };
 };
 
@@ -146,6 +165,12 @@ const mapDispatchToProps = (dispatch) => {
     handleSubmit: () =>
       dispatch({
         type: 'HANDLE_SUBMIT',
+      }),
+    update: (groupId, cardIndex) =>
+      dispatch({
+        type: 'UPDATE',
+        groupId,
+        cardIndex,
       }),
   };
 };
