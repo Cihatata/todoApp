@@ -16,7 +16,7 @@
         margin-bottom: 40px;
 
     }
-    &-header{
+    &__header{
         font-weight: 700;
         font-size: 36px;
         margin-bottom: 18px;
@@ -24,7 +24,7 @@
         padding: 3px;
         border-bottom: 2px solid $logo;
     }
-    &-button{
+    &__button{
         padding: 3px;
         font-size: 12px;
         font-weight: 700;
@@ -32,6 +32,24 @@
         width: 90px;
         background-color:$acikmavi;
         color:$koyusari;
+        margin-left: auto;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        border:2px solid $koyu;
+        @include mq(){
+            font-size: 16px;
+            margin-right: 10px;
+            width: 110px;
+        }
+    }
+    &__routeButton{
+        padding: 3px;
+        font-size: 12px;
+        font-weight: 700;
+        height:40px;
+        width: 90px;
+        background-color:$logo;
+        color:$koyu;
         margin-left: auto;
         margin-bottom: 10px;
         border-radius: 5px;

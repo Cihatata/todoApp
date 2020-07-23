@@ -1,6 +1,8 @@
-Refactor Immutable        
-Feature Completed Event    
+Refactor Immutable                      COMPLETED
+Feature Completed Event     
 Refactor Redux  addEvent,addGroup       COMPLETED
-Feature Delete Group
-Feature Delete Event
+Feature Delete Group                    COMPLETED
+Feature Delete Event                    COMPLETED
 Feature Edit   Ecent
+Feature Route User
+Feature Axios Request             

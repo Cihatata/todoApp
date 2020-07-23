@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import I from 'immutable';
 import Column from './Column';
-// import { handleChange } from '../actions/index';
 import '../styles/Main.scss';
 
 function Main(props) {
@@ -19,20 +18,25 @@ function Main(props) {
     handleSubmit,
     groupNameInput,
     addGroup,
+    toogleEdit,
+    update,
+    editGroupId,
+    editCardIndex,
+    selectedGroupName,
   } = props;
   console.log(groups);
   return (
     <main className="main">
       <Column />
       <div>
-        <div className={'main-form' + (ifClickGroup ? '-show' : ' ')}>
-          <label htmlFor="GroupName" className="main-form-show-label">
+        <div className={'main__form' + (ifClickGroup ? '--show' : ' ')}>
+          <label htmlFor="GroupName" className="main__form--show-label">
             Grup ismi
             <input
               name="groupNameInput"
               type="text"
               onChange={handleChange}
-              className="main-form-show-input"
+              className="main__form--show-input"
               value={groupNameInput}
             />
           </label>
@@ -40,31 +44,31 @@ function Main(props) {
             onClick={addGroup}
             type="Submit"
             value={"Ekle"}
-            className="main-form-show-submit"
+            className="main__form--show-submit"
           />
         </div>
-        <form className={'main-form' + (ifClickEvent ? '-show' : ' ')}>
-          <label htmlFor="baslik" className="main-form-show-label">
+        <form className={'main__form' + (ifClickEvent ? '--show' : ' ')}>
+          <label htmlFor="baslik" className="main__form--show-label">
             Etkinlik Basligi
             <input
               name="eventHeader"
               onChange={handleChange}
               type="text"
-              className="main-form-show-input"
+              className="main__form--show-input"
               value={eventHeader}
             />
           </label>
-          <label htmlFor="icerik" className="main-form-show-label">
+          <label htmlFor="icerik" className="main__form--show-label">
             Etkinlik Icerigi
             <textarea
               name="eventContent"
               type="text"
-              className="main-form-show-input"
+              className="main__form--show-input"
               onChange={handleChange}
               value={eventContent}
             />
           </label>
-          <label htmlFor="tarih" className="main-form-show-label">
+          <label htmlFor="tarih" className="main__form--show-label">
             Tarih
             <input
               onChange={handleChange}
@@ -73,7 +77,7 @@ function Main(props) {
               value={eventDate}
             />
           </label>
-          <label htmlFor="etiket" className="main-form-show-label">
+          <label htmlFor="etiket" className="main__form--show-label">
             Etiket
             <select onChange={handleChange} name="eventTags" value={eventTags}>
               <option value="2">Dusuk</option>
@@ -81,35 +85,46 @@ function Main(props) {
               <option value="4">Yuksek</option>
             </select>
           </label>
-          <label htmlFor="group" className="main-form-show-label">
-            Grup
-            <select
-              onChange={handleChange}
-              name="eventGroupName"
-              className="main-form-show-select"
-              value={eventGroupName}
+          {selectedGroupName && (
+            <label htmlFor="group" className="main__form--show-label">
+              Grup
+              <select
+                onChange={handleChange}
+                name="eventGroupName"
+                className="main__form--show-select"
+                value={eventGroupName}
+              >
+                <option>Kolon seciniz</option>
+                {groups.map((val) => {
+                  return (
+                    <option
+                      key={val.groupId + Math.random()}
+                      value={val.groupName}
+                    >
+                      {val.groupName}
+                    </option>
+                  );
+                })}
+              </select>
+            </label> )
+          }
+          {toogleEdit ? (
+            <button
+              onClick={() => update(editGroupId, editCardIndex)}
+              className="main__form--show-update"
+              type="button"
             >
-            <option>Kolon seciniz</option>
-              {groups.map((val) => {
-                return (
-                  <option
-                    key={val.groupId + Math.random()}
-                    value={val.groupName}
-                  >
-                    {val.groupName}
-                  </option>
-                );
-              })}
-            </select>
-          </label>
-          <button
-            onClick={handleSubmit}
-            className="main-form-show-submit"
-            value="Ekle"
-            type="button"
-          >
-            Ekle
-          </button>
+              Guncelle
+            </button>
+          ) : (
+            <button
+              onClick={handleSubmit}
+              className="main__form--show-submit"
+              type="button"
+            >
+              Ekle
+            </button>)
+          }
         </form>
       </div>
     </main>
@@ -117,18 +132,21 @@ function Main(props) {
 }
 
 const mapStateToProps = (state) => {
-  console.log(I.Map(state).get('groups', [' ']));
   return {
     // Kod Tekrari Dogrusu nedir ?
-    groups: I.Map(state).get('groups', [' ']),
-    groupNameInput: I.Map(state).get('groupNameInput', ' '),
+    groups: I.Map(state).get('groups', ['']),
+    groupNameInput: I.Map(state).get('groupNameInput', ''),
     ifClickGroup: I.Map(state).get('ifClickGroup', false),
     ifClickEvent: I.Map(state).get('ifClickEvent', false),
-    eventDate: I.Map(state).get('eventDate', ' '),
-    eventHeader: I.Map(state).get('eventHeader', ' '),
-    eventContent: I.Map(state).get('eventContent', ' '),
+    toogleEdit: I.Map(state).get('toogleEdit', false),
+    eventDate: I.Map(state).get('eventDate', ''),
+    eventHeader: I.Map(state).get('eventHeader', ''),
+    eventContent: I.Map(state).get('eventContent', ''),
     eventGroupName: I.Map(state).get('eventGroupName', ' '),
     eventTags: I.Map(state).get('eventTags', 2),
+    editCardIndex: I.Map(state).get('editCardIndex', ''),
+    editGroupId: I.Map(state).get('editGroupId', ''),
+    selectedGroupName: I.Map(state).get('selectedGroupName', true),
   };
 };
 
@@ -147,6 +165,12 @@ const mapDispatchToProps = (dispatch) => {
     handleSubmit: () =>
       dispatch({
         type: 'HANDLE_SUBMIT',
+      }),
+    update: (groupId, cardIndex) =>
+      dispatch({
+        type: 'UPDATE',
+        groupId,
+        cardIndex,
       }),
   };
 };

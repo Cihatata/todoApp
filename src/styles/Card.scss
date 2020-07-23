@@ -9,35 +9,35 @@
     box-shadow: 10px 10px 20px 0px rgba(0, 0, 0, 0.384);
     padding: 10px;
     box-sizing: border-box;
-    &-info{
+    &__info{
         display: flex;
-            &-left{
+            &--left{
             font-size: 14px;
             font-weight: 400;
             margin-right: 25px;
             box-sizing: border-box;
             width: 60%;
             max-width: 290px;
-            &-header{
-                padding: 4px;
-                font-size: 18px;
-                font-weight: bold;
-                border-bottom: 1px solid $koyu;
+                &-header{
+                    padding: 4px;
+                    font-size: 18px;
+                    font-weight: bold;
+                    border-bottom: 1px solid $koyu;
             }
-            &-text{
-                line-height: 1.5;
-                padding: 6px;
-            }
+                &-text{
+                    line-height: 1.5;
+                    padding: 6px;
+                }
             }
         
-             &-right{
+             &--right{
                  margin-left: auto;
                 display: flex;
                 flex-direction: column;
                 justify-content: space-around;
             }
     }
-    &-buttons{
+    &__buttons{
         padding: 8px;
         margin-left: auto;
         font-size: 10px;
