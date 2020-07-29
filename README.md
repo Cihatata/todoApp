@@ -4,6 +4,7 @@ Bu uygulamayı [Kodluyoruz](https://kodluyoruz.org) ekibinin düzenlediği Front
 
  * Lifting-state-up
  * Redux
+ * React-router
 ## Installation
 ```
 git clone https://github.com/Cihatata/todoApp.git
